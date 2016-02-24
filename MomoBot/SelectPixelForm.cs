@@ -37,9 +37,13 @@ namespace MomoBot
             }
             if (window != null)
             {
-                Bitmap picture = ScreenCapture.PrintWindow(window.MainWindowHandle);
+                ScreenCapture capture = new ScreenCapture();
+                Bitmap picture = capture.CaptureScreen(window.MainWindowHandle);
                 this.picture.Size = picture.Size;
                 this.picture.Image = picture;
+                this.WindowState = FormWindowState.Minimized;
+                this.Show();
+                this.WindowState = FormWindowState.Normal;
             }
             if (text != "None")
                 this.listItems = Extensions.StringToList(text);

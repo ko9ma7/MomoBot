@@ -14,7 +14,20 @@ namespace MomoBot
             StringBuilder sb = new StringBuilder();
             foreach (T element in list)
                 sb.Append(element.ToString()).Append(",");
-            sb.Remove(sb.Length - 1, 1);
+            if (list.Count > 0)
+                sb.Remove(sb.Length - 1, 1);
+            string final = sb.ToString();
+            if (final == string.Empty)
+                return "None";
+            return final;
+        }
+        public static string KeyListToString(List<Keys> list)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (Keys element in list)
+                sb.Append(KeyToString(element)).Append(",");
+            if (list.Count > 0)
+                sb.Remove(sb.Length - 1, 1);
             string final = sb.ToString();
             if (final == string.Empty)
                 return "None";
@@ -23,10 +36,59 @@ namespace MomoBot
         public static List<string> StringToList(string str)
         {
             List<string> list = new List<string>();
-            string[] strArray = str.Split(',');
-            foreach (string s in strArray)
-                list.Add(s);
+            if (str != "None")
+            {
+                string[] strArray = str.Split(',');
+                foreach (string s in strArray)
+                    list.Add(s);
+            }
             return list;
+        }
+        public static List<Keys> StringToKeys(string str)
+        {
+            List<Keys> keys = new List<Keys>();
+            if (str != "None")
+            {
+                List<string> list = StringToList(str);
+                foreach (string s in list)
+                    keys.Add(StringToKey(s));
+            }
+            return keys;
+        }
+        public static List<Coordinate> StringToCoords(string str)
+        {
+            List<Coordinate> coords = new List<Coordinate>();
+            if (str != "None")
+            {
+                List<string> list = StringToList(str);
+                foreach (string s in list)
+                {
+                    string[] strArray = s.Split('.');
+                    coords.Add(new Coordinate(TryParseInt(strArray[0]), TryParseInt(strArray[1])));
+                }
+            }
+            return coords;
+        }
+        public static List<PixelPattern> StringToPixels(string str)
+        {
+            List<PixelPattern> pixels = new List<PixelPattern>();
+            if (str != "None")
+            {
+                List<string> list = StringToList(str);
+                foreach (string s in list)
+                {
+                    string[] strArray = s.Split('.');
+                    pixels.Add(new PixelPattern(TryParseInt(strArray[0]), TryParseInt(strArray[1]), TryParseInt(strArray[2]), TryParseInt(strArray[3]), TryParseInt(strArray[1])));
+                }
+            }
+            return pixels;
+        }
+        public static int TryParseInt(string str)
+        {
+            int myInt;
+            if (int.TryParse(str, out myInt))
+                return myInt;
+            return 0;
         }
         public static string KeyToString(Keys key)
         {
@@ -83,6 +145,8 @@ namespace MomoBot
                         return key.ToString();
                     else if (key >= Keys.D0 && key <= Keys.D9)
                         return (key - Keys.D0).ToString();
+                    else if (key >= Keys.F1 && key <= Keys.F12)
+                        return key.ToString();
                     return string.Empty;
             }
         }
@@ -93,7 +157,7 @@ namespace MomoBot
                 case "`":
                     return Keys.Oemtilde;
                 case "Esc":
-                    return Keys.Return;
+                    return Keys.Escape;
                 case "-":
                     return Keys.OemMinus;
                 case "+":
@@ -125,8 +189,15 @@ namespace MomoBot
                 default:
                     if (str.Length == 1 && str[0] >= 'A' && str[0] <= 'Z')
                         return str[0] - 'A' + Keys.A;
-                    else if (str.Length == 2 && str[0] == 'D' && str[1] >= '0' && str[1] <= '9')
-                        return str[1] - '0' + Keys.D0;
+                    else if (str.Length == 1 && str[0] >= '0' && str[0] <= '9')
+                        return str[0] - '0' + Keys.D0;
+                    else if (str.StartsWith("F"))
+                    {
+                        if (str.Length == 2)
+                            return str[1] - '1' + Keys.F1;
+                        else if (str.Length == 3)
+                            return str[2] - '0' + 9 + Keys.F1;
+                    }
                     else
                     {
                         Keys[] rest = new Keys[] { Keys.PageUp, Keys.PageDown, Keys.Tab, Keys.Back, Keys.Home, Keys.End, Keys.Insert, Keys.Delete, Keys.Up, Keys.Down, Keys.Left, Keys.Right, Keys.Space };

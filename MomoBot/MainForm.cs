@@ -41,9 +41,10 @@ namespace MomoBot
         {
             InitializeComponent();
             this.buttons = new Button[] { this.buttonGameWindow, this.buttonTargetPixel, this.buttonTargetKey, this.buttonTargetAttack, this.buttonHPPixel, this.buttonHPKey, this.buttonMPPixel, this.buttonMPKey, this.buttonDeathPixel, this.buttonDeathClick, this.buttonRestPixel, this.buttonRestKey, this.buttonWaypointsPixel, this.buttonWaypointsKey, this.buttonWaypointsCoords, this.buttonStartKey, this.buttonStopKey };
-            this.updateForm();
             if (!Settings.Initialized)
                 this.updateSettings();
+            else
+                this.updateForm();
         }
         public void updateButtonText(ButtonTypes type, string str)
         {
@@ -53,37 +54,61 @@ namespace MomoBot
         {
             Settings.GameWindow = this.buttonGameWindow.Text;
             Settings.DetectTarget = this.checkboxTarget.Checked;
-
+            Settings.TargetPixels = Extensions.StringToPixels(this.buttonTargetPixel.Text);
+            Settings.TargetKey = Extensions.StringToKey(this.buttonTargetKey.Text);
+            Settings.AttackKeys = Extensions.StringToKeys(this.buttonTargetAttack.Text);
+            Settings.MinDelay = Extensions.TryParseInt(this.textboxTargetMinDelay.Text);
+            Settings.MaxDelay = Extensions.TryParseInt(this.textboxTargetMaxDelay.Text);
+            Settings.DetectHP = this.checkboxHP.Checked;
+            Settings.HPPixels = Extensions.StringToPixels(this.buttonHPPixel.Text);
+            Settings.HPKey = Extensions.StringToKey(this.buttonHPKey.Text);
+            Settings.DetectMP = this.checkboxMP.Checked;
+            Settings.MPPixels = Extensions.StringToPixels(this.buttonMPPixel.Text);
+            Settings.MPKey = Extensions.StringToKey(this.buttonMPKey.Text);
+            Settings.DetectDeath = this.checkboxDeath.Checked;
+            Settings.DeathPixels = Extensions.StringToPixels(this.buttonDeathPixel.Text);
+            Settings.ReviveClick = Extensions.StringToCoords(this.buttonDeathClick.Text);
+            Settings.DetectRest = this.checkboxRest.Checked;
+            Settings.RestPixels = Extensions.StringToPixels(this.buttonRestPixel.Text);
+            Settings.RestKey = Extensions.StringToKey(this.buttonRestKey.Text);
+            Settings.RestTime = Extensions.TryParseInt(this.textboxRestTime.Text);
+            Settings.Waypoints = this.checkboxWaypoints.Checked;
+            Settings.MapPixels = Extensions.StringToPixels(this.buttonWaypointsPixel.Text);
+            Settings.MapKey = Extensions.StringToKey(this.buttonWaypointsKey.Text);
+            Settings.WaypointTime = Extensions.TryParseInt(this.textboxWaypointsTime.Text);
+            Settings.WaypointCoords = Extensions.StringToCoords(this.buttonWaypointsCoords.Text);
+            Settings.StartKey = Extensions.StringToKey(this.buttonStartKey.Text);
+            Settings.StopKey = Extensions.StringToKey(this.buttonStopKey.Text);
         }
         private void updateForm()
         {
             this.buttonGameWindow.Text = Settings.GameWindow;
             this.checkboxTarget.Checked = Settings.DetectTarget;
             this.buttonTargetPixel.Text = Extensions.ListToString(Settings.TargetPixels);
-            this.buttonTargetKey.Text = Settings.TargetKey;
-            this.buttonTargetAttack.Text = Extensions.ListToString(Settings.AttackKeys);
+            this.buttonTargetKey.Text = Extensions.KeyToString(Settings.TargetKey);
+            this.buttonTargetAttack.Text = Extensions.KeyListToString(Settings.AttackKeys);
             this.textboxTargetMinDelay.Text = Settings.MinDelay.ToString();
             this.textboxTargetMaxDelay.Text = Settings.MaxDelay.ToString();
             this.checkboxHP.Checked = Settings.DetectHP;
             this.buttonHPPixel.Text = Extensions.ListToString(Settings.HPPixels);
-            this.buttonHPKey.Text = Settings.HPKey;
+            this.buttonHPKey.Text = Extensions.KeyToString(Settings.HPKey);
             this.checkboxMP.Checked = Settings.DetectMP;
             this.buttonMPPixel.Text = Extensions.ListToString(Settings.MPPixels);
-            this.buttonMPKey.Text = Settings.MPKey;
+            this.buttonMPKey.Text = Extensions.KeyToString(Settings.MPKey);
             this.checkboxDeath.Checked = Settings.DetectDeath;
             this.buttonDeathPixel.Text = Extensions.ListToString(Settings.DeathPixels);
             this.buttonDeathClick.Text = Extensions.ListToString(Settings.DeathPixels);
             this.checkboxRest.Checked = Settings.DetectRest;
             this.buttonRestPixel.Text = Extensions.ListToString(Settings.RestPixels);
-            this.buttonRestKey.Text = Settings.RestKey;
+            this.buttonRestKey.Text = Extensions.KeyToString(Settings.RestKey);
             this.textboxRestTime.Text = Settings.RestTime.ToString();
             this.checkboxWaypoints.Checked = Settings.Waypoints;
             this.buttonWaypointsPixel.Text = Extensions.ListToString(Settings.MapPixels);
-            this.buttonWaypointsKey.Text = Settings.MapKey;
+            this.buttonWaypointsKey.Text = Extensions.KeyToString(Settings.MapKey);
             this.textboxWaypointsTime.Text = Settings.WaypointTime.ToString();
             this.buttonWaypointsCoords.Text = Extensions.ListToString(Settings.WaypointCoords);
-            this.buttonStartKey.Text = Settings.StartKey;
-            this.buttonStopKey.Text = Settings.StopKey;
+            this.buttonStartKey.Text = Extensions.KeyToString(Settings.StartKey);
+            this.buttonStopKey.Text = Extensions.KeyToString(Settings.StopKey);
         }
         private void showPixelForm(ButtonTypes type)
         {

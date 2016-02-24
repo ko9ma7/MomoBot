@@ -286,6 +286,7 @@
             this.textboxRestTime.Name = "textboxRestTime";
             this.textboxRestTime.Size = new System.Drawing.Size(80, 22);
             this.textboxRestTime.TabIndex = 44;
+            this.textboxRestTime.Text = "20000";
             // 
             // label18
             // 
@@ -313,6 +314,7 @@
             this.textboxTargetMaxDelay.Name = "textboxTargetMaxDelay";
             this.textboxTargetMaxDelay.Size = new System.Drawing.Size(75, 22);
             this.textboxTargetMaxDelay.TabIndex = 41;
+            this.textboxTargetMaxDelay.Text = "1000";
             // 
             // label15
             // 
@@ -329,6 +331,7 @@
             this.textboxTargetMinDelay.Name = "textboxTargetMinDelay";
             this.textboxTargetMinDelay.Size = new System.Drawing.Size(75, 22);
             this.textboxTargetMinDelay.TabIndex = 39;
+            this.textboxTargetMinDelay.Text = "300";
             // 
             // label14
             // 
@@ -402,6 +405,7 @@
             this.textboxWaypointsTime.Name = "textboxWaypointsTime";
             this.textboxWaypointsTime.Size = new System.Drawing.Size(121, 22);
             this.textboxWaypointsTime.TabIndex = 31;
+            this.textboxWaypointsTime.Text = "30000";
             // 
             // label10
             // 

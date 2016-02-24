@@ -8,7 +8,7 @@ namespace MomoBot
 {
     public class PixelPattern
     {
-        static int range = 10;
+        public static int range = 10;
         public Coordinate coordinates;
         public int r;
         public int g;
